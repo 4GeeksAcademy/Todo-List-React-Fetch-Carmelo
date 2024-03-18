@@ -40,7 +40,13 @@ const handleKeyDown = (event) => {
     fetch('https://playground.4geeks.com/apis/fake/todos/user/Carmelico92',{
       method:'GET'
     })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.status === 404) {
+          createUser();
+          return [];
+      }
+      return response.json();
+  })
     .then((data) => setTarea(data))
     .catch(error => console.log(error))
   }
@@ -56,7 +62,13 @@ const handleKeyDown = (event) => {
       "Content-Type": "application/json"
     }
     })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.status === 404) {
+          createUser();
+          return tarea;
+      }
+      return response.json();
+  })
     .then((data) => console.log(data))
     .catch((error) => {console.log(error)})
   }
